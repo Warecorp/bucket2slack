@@ -24,6 +24,13 @@ class Parser
   end
 
   def self.created data
+    user = data["author"]["display_name"]
+    id_pr = data["id"]
+    title = data['title']
+    reviewers = data['reviewers'].map { |x| x['display_name'] }.join ", "
+    link = data['links']['html']['href']
+
+    "#{user} created a new PR \"##{id_pr}: #{title}\"; #{link}. \nReviewers: #{reviewers}."
   end
 
   def self.updated data
@@ -57,7 +64,7 @@ class Parser
     user = data["author"]["display_name"]
     title = data["title"]
 
-    "#{user}'s Pull Request \"#{title}\" has been successfully :tada:" 
+    "#{user}'s Pull Request \"#{title}\" has been successfully :tada:"
 
   end
 
