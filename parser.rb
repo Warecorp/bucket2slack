@@ -30,7 +30,7 @@ class Parser
     reviewers = data['reviewers'].map { |x| x['display_name'] }.join ", "
     link = data['links']['html']['href']
 
-    "#{user} created a new PR \"##{id_pr}: #{title}\"; #{link}. \nReviewers: #{reviewers}."
+    "#{user} created a new PR: \"<#{link}|##{id_pr}: #{title}>\". \nReviewers: #{reviewers}."
   end
 
   def self.updated data
@@ -39,17 +39,17 @@ class Parser
     title = data["title"]
     link = data["source"]["repository"]["links"]["html"]["href"] + "/pull-requests"
 
-    "#{user} updated a pull request for \"#{state} - #{title}\"; #{link}."
+    "#{user} updated a pull request for \"<#{link}|#{state} - #{title}>\"."
   end
 
   def self.approve data
     user = data["user"]["display_name"]
-    "#{user} approved a pull request"
+    "#{user} approved a pull request."
   end
 
   def self.unapprove data
     user = data["user"]["display_name"]
-    "#{user} unapproved a pull request"
+    "#{user} unapproved a pull request."
   end
 
   def self.declined data
@@ -64,7 +64,7 @@ class Parser
     user = data["author"]["display_name"]
     title = data["title"]
 
-    "#{user}'s Pull Request \"#{title}\" has been successfully :tada:"
+    "#{user}'s Pull Request \"#{title}\" has been successfully merged. :tada:"
   end
 
   def self.comment_created data

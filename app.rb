@@ -24,7 +24,8 @@ end
 
 
 get '/' do
-  "Bitbucket PR => Slack!\nSet your bitbucket's Pull Request URL Hook to this URL."
+  "<h3>Bitbucket PR => Slack!</h3>
+   <p>Set your bitbucket's Pull Request URL Hook to this URL.</p>"
 end
 
 get '/unauthorized' do
