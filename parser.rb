@@ -31,9 +31,8 @@ class Parser
     state = data["state"]
     title = data["title"]
     link = data["source"]["repository"]["links"]["html"]["href"] + "/pull-requests"
-    avatar = data["source"]["repository"]["links"]["avatar"]["href"]
 
-    "#{user} updated Pull Request for \"#{state} - #{title}\"; #{link}"
+    "#{user} updated a pull request for \"#{state} - #{title}\"; #{link}."
   end
 
   def self.approve data
@@ -42,9 +41,24 @@ class Parser
   end
 
   def self.unapprove data
+    user = data["user"]["display_name"]
+    "#{user} unapproved a pull request"
   end
 
   def self.declined data
+    user = data["author"]["display_name"]
+    title = data["title"]
+    reason = data["reason"]
+
+    "#{user} declined \"#{title}\"" + (!reason.nil? ? ", reason: '#{reason}'" : "")
+  end
+
+  def self.merged data
+    user = data["author"]["display_name"]
+    title = data["title"]
+
+    "#{user}'s Pull Request \"#{title}\" has been successfully :tada:" 
+
   end
 
   def self.comment_created data
