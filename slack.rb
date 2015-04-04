@@ -11,8 +11,8 @@ class Slack
       "cancel sending message"
     else
       query = {
-        :team => "redant",
-        :token => "xoxp-2530341512-3838583146-4293642966-7e7606",
+        :team => ENV['SLACK_TEAM'],
+        :token => ENV['SLACK_TOKEN'],
         :text => text,
         :channel =>  channel || "#testapi",
         :username => bot || "slackbucketbot",
