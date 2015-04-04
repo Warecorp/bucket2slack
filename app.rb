@@ -17,8 +17,12 @@ helpers do
     channel = "##{channel}"
     bot = channel.delete("#").delete("_") + "bot"
     text = Parser.process(payload)
-    response = Slack.send( channel, text, bot )
-    response.to_json
+    if text
+      response = Slack.send( channel, text, bot )
+      response.to_json
+    else
+      halt 503, "Can't forward the requests."
+    end
   end
 end
 

@@ -7,8 +7,8 @@ class Parser
     'declined',
     'merged',
     'comment_created',
+    'comment_updated',
     'comment_deleted',
-    'comment_updated'
   ]
 
   def self.process payload
@@ -19,7 +19,7 @@ class Parser
       m = self.method action
       m.call payload["pullrequest_"+action] unless m.nil?
     else
-      "No method exists"
+      false
     end
   end
 
@@ -67,12 +67,32 @@ class Parser
     "#{user}'s Pull Request \"#{title}\" has been successfully merged. :tada:"
   end
 
-  def self.comment_created data
+  def self.truncate excerpt
+    max_length = 40
+    excerpt.length > max_length ? excerpt[0..max_length] + "..." : excerpt
   end
 
-  def self.comment_deleted data
+  def self.comment_created data
+    user = data["user"]["display_name"]
+    link = data['links']['html']['href']
+    excerpt = truncate data['content']['raw']
+
+    "#{user} added a <#{link}|comment> on a pull request: \n'#{excerpt}'"
   end
 
   def self.comment_updated data
+    user = data["user"]["display_name"]
+    link = data['links']['html']['href']
+    excerpt = truncate data['content']['raw']
+
+    "#{user} updated the <#{link}|comment> on a pull request: \n'#{excerpt}'"
   end
+
+  def self.comment_deleted data
+    user = data["user"]["display_name"]
+    link = data['links']['html']['href']
+
+    "#{user} deleted a <#{link}|comment>"    
+  end
+
 end
