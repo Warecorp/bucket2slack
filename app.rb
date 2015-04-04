@@ -1,9 +1,9 @@
 require 'sinatra'
 require 'dotenv'
 require 'json'
-require './parser'
-require './slack'
+require 'haml'
 
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
 Dotenv.load
 
 before do
@@ -28,12 +28,9 @@ end
 
 
 get '/' do
-  "<h3>Bitbucket PR => Slack!</h3>
-   <p>Set your bitbucket's Pull Request URL Hook to this URL.</p>"
-end
-
-get '/unauthorized' do
-  "Token doesn't exist".to_json
+  readme = File.read "README.md"
+  options = { autolink: true, tables: true }
+  haml :index, :locals => { :text => markdown(readme, options) }
 end
 
 post '/' do

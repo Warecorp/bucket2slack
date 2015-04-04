@@ -1,5 +1,5 @@
 # Bucket2Slack
-### Bitbucket’s PR => Slack
+#### [Bitbucket’s PR => Slack](https://github.com/ixnixnixn/bucket2slack)
 
 Slack’s integration with Bitbucket only supports POST Hook, which is only sending information when there’s a commit. Instead, Bucket2Slack forwards the Bitbucket’s Pull Request Hook to notify slack.
 
@@ -19,17 +19,21 @@ The limitation from Bitbucket's API causes many events that doesn't have complet
 ## Usage
 
 - Obtain Slack's API token from here: https://api.slack.com/web
-- Go to your repository page; `Settings > Hooks > Add Hook 'Pull Request POST'`
-- Insert `http://<server>{/channel}` in the URL. Channel is optional, default is set to '#general' or you could set default channel in the config
+- Go to your repository page: `Settings > Hooks > Add Hook 'Pull Request POST'`
+- Insert `http://<server>{/channel}` in the URL. Channel is optional, default is set to `#general` or you could set default channel in the config
 
 ## Installation
 
 - Fork the repository
 - Deploy to heroku or roll your own server
 - Set config variables in your dashboard or use `.env` file;
-  - SLACK_TEAM: your team's domain
-  - SLACK_TOKEN: your API token
-  - SLACK_DEFAULT (optional): your default channel if not specified
+  - `SLACK_TEAM`: your team's domain
+  - `SLACK_TOKEN`: your API token
+  - `SLACK_DEFAULT` (optional): your default channel if not specified
+
+## License
+
+MIT
 
 ## References
 - [Luiz’s hook](https://github.com/lfilho/bitbucket-slack-pr-hook)
