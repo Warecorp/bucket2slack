@@ -14,8 +14,8 @@ class Slack
         :team => ENV['SLACK_TEAM'],
         :token => ENV['SLACK_TOKEN'],
         :text => text,
-        :channel =>  channel || "#testapi",
-        :username => bot || "slackbucketbot",
+        :channel => channel,
+        :username => bot,
       }
 
       pp post("/chat.postMessage", :query => query)

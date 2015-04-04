@@ -17,9 +17,8 @@ helpers do
     channel = "##{channel}"
     bot = channel.delete("#").delete("_") + "bot"
     text = Parser.process(payload)
-    
-    # response = Slack.send( channel, text, bot )
-    # response.to_json
+    response = Slack.send( channel, text, bot )
+    response.to_json
   end
 end
 

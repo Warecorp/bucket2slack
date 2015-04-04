@@ -65,7 +65,6 @@ class Parser
     title = data["title"]
 
     "#{user}'s Pull Request \"#{title}\" has been successfully :tada:"
-
   end
 
   def self.comment_created data
