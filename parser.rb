@@ -1,5 +1,3 @@
-require 'logger'
-
 class Parser
   @actions = [
     "updated",
@@ -26,11 +24,7 @@ class Parser
     link = payload["source"]["repository"]["links"]["html"]["href"] + "/pull-requests"
     avatar = payload["source"]["repository"]["links"]["avatar"]["href"]
 
-    parsed = {
-      :bot_avatar_uri => avatar,
-      :text => "#{username} updated Pull Request for <a href='#{link}'>[#{state}] #{title}</a>"
-    }
-    parsed
+    "#{username} updated Pull Request for \"#{state} #{title}\"; #{link}"
   end
 
 

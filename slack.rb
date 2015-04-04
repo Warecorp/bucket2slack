@@ -1,10 +1,11 @@
 require 'httparty'
+require 'pp'
 
 class Slack
   include HTTParty
   base_uri "https://slack.com/api"
 
-  def self.send( channel, text, bot, bot_avatar_uri )
+  def self.send( channel, text, bot )
     is_text_invalid = (text.nil? or text == "")
     if is_text_invalid
       "cancel sending message"
@@ -16,9 +17,8 @@ class Slack
         :channel =>  channel || "#testapi",
         :username => bot || "slackbucketbot",
       }
-      query[:bot_avatar_uri] = bot_avatar_uri if !bot_avatar_uri.nil?
 
-      post("/chat.postMessage", :query => query)
+      pp post("/chat.postMessage", :query => query)
     end
 
   end
