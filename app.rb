@@ -28,11 +28,12 @@ post '/' do
   payload = JSON.parse request.body.read
 
   # Parser.process(payload)
-  Mail.deliver do
-    from 'ikhsan.assaat@gmail.com'
-    to 'ikhsan.assaat@gmail.com'
-    subject 'test'
-    body payload.to_s
-  end
+  # Mail.deliver do
+  #   from 'ikhsan.assaat@gmail.com'
+  #   to 'ikhsan.assaat@gmail.com'
+  #   subject 'test'
+  #   body payload.to_s
+  # end
+  puts payload.to_s
 
 end
