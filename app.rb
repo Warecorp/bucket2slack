@@ -39,7 +39,8 @@ end
 post '/' do
   content_type :json
   payload = JSON.parse request.body.read
-  forward_action payload, "testapi"
+  default_channel = ENV['SLACK_DEFAULT'] || "general"
+  forward_action payload, default_channel
 end
 
 post '/:channel' do |channel|
