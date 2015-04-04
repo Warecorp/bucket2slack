@@ -4,19 +4,7 @@ require 'logger'
 require 'mail'
 
 require_relative 'parser'
-
-options = {
-  :address => "smtp.gmail.com",
-  :port => 587,
-  :user_name => ENV['username'] || 'xxx',
-  :password => ENV['password'] || 'xxx',
-  :authentication => 'plain',
-  :enable_starttls_auto => true
-}
-
-Mail.defaults do
-  delivery_method :smtp, options
-end
+require_relative 'slack'
 
 get '/' do
   "Post to this URL"
@@ -26,14 +14,14 @@ post '/' do
   content_type :json
 
   payload = JSON.parse request.body.read
+  puts payload
 
-  # Parser.process(payload)
-  # Mail.deliver do
-  #   from 'ikhsan.assaat@gmail.com'
-  #   to 'ikhsan.assaat@gmail.com'
-  #   subject 'test'
-  #   body payload.to_s
-  # end
-  puts payload.to_s
+  parsed = Parser.process(payload)
+
+  channel = '#testapi'
+  bot =  'harrodsbot'
+  text = parsed[:text]
+  bot_avatar_uri = parsed[:bot_avatar_uri]
+  Slack.send( channel, text, bot, bot_avatar_uri )
 
 end
