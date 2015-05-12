@@ -1,29 +1,37 @@
 require 'sinatra'
-require 'dotenv'
 require 'json'
 require 'haml'
+require 'yaml'
 
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
-Dotenv.load
 
-before do
-  team_exists = !ENV['SLACK_TEAM'].nil? and ENV['SLACK_TEAM'] != ""
-  token_exists = !ENV['SLACK_TOKEN'].nil? and ENV['SLACK_TOKEN'] != ""
-  halt 401, "Make sure to set slack's team and token id..." unless token_exists and team_exists
-end
+CONFIG = YAML::load_file 'config.yml'
 
 helpers do
-  def forward_action (payload, channel)
-    channel = "##{channel}"
+  def forward_action (payload, team, channel = nil)
+    channel = "##{channel ? channel : default_channel(team)}"
     bot = channel.delete("#").delete("_") + "bot"
     text = Parser.process(payload)
     if text
-      response = Slack.send( channel, text, bot )
+      response = Slack.send(team_host(team), channel, token(team), text, bot )
       response.to_json
     else
       halt 503, "Can't forward the requests."
     end
   end
+
+  def default_channel team
+    CONFIG[team]['default_channel'] || "general"
+  end
+
+  def token team
+    CONFIG[team]['token']
+  end
+
+  def team_host team
+    CONFIG[team]['team']
+  end
+
 end
 
 
@@ -33,15 +41,14 @@ get '/' do
   haml :index, :locals => { :text => markdown(readme, options) }
 end
 
-post '/' do
+post '/:team' do |team|
   content_type :json
   payload = JSON.parse request.body.read
-  default_channel = ENV['SLACK_DEFAULT'] || "general"
-  forward_action payload, default_channel
+  forward_action payload, team
 end
 
-post '/:channel' do |channel|
+post '/:team/:channel' do |team, channel|
   content_type :json
   payload = JSON.parse request.body.read
-  forward_action payload, channel
+  forward_action payload, team, channel
 end

@@ -9,6 +9,7 @@
 /test/version_tmp/
 /tmp/
 .env
+config.yml
 
 ## Specific to RubyMotion:
 .dat*

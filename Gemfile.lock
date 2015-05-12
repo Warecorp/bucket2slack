@@ -1,7 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dotenv (2.0.1)
     haml (4.0.6)
       tilt
     httparty (0.13.3)
@@ -12,7 +11,7 @@ GEM
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
-    redcarpet (3.2.2)
+    redcarpet (3.2.3)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -23,8 +22,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  dotenv
-  haml
-  httparty
-  redcarpet
-  sinatra
+  haml (~> 4.0.6)
+  httparty (~> 0.13.3)
+  redcarpet (~> 3.2.3)
+  sinatra (~> 1.4.6)

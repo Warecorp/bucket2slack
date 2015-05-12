@@ -5,14 +5,14 @@ class Slack
   include HTTParty
   base_uri "https://slack.com/api"
 
-  def self.send( channel, text, bot )
+  def self.send(team, channel, token, text, bot )
     is_text_invalid = (text.nil? or text == "")
     if is_text_invalid
       "cancel sending message"
     else
       query = {
-        :team => ENV['SLACK_TEAM'],
-        :token => ENV['SLACK_TOKEN'],
+        :team => team,
+        :token => token,
         :text => text,
         :channel => channel,
         :username => bot,

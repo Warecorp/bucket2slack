@@ -20,15 +20,12 @@ The Bitbucket's API doesn't have complete event's information. For example; pull
 
 - Fork the repository
 - Deploy to heroku or roll your own server
-- Set config variables in your dashboard or use `.env` file;
-  - `SLACK_TEAM`: your team's domain
-  - `SLACK_TOKEN`: your Slack's API token (get it from [Slack's API docs](https://api.slack.com/web))
-  - `SLACK_DEFAULT` : your default channel if not specified (optional)
+- Set config variables in `config.yml` file (see `config.yml.example`).
 
 ## Usage
 
 - Go to your Bitbucket's repository page: `Settings > Hooks > Add Hook 'Pull Request POST'`.
-- Insert `http://<server>{/channel}` in the URL. Channel is optional, default is set to `#general` but you could set the channel that you want to notify from the config vars or add it to the URL
+- Insert `http://<server>/team/{/channel}` in the URL. Channel is optional, default is set to `#general` but you could set the channel that you want to notify from the config vars or add it to the URL
 
 ## License
 
